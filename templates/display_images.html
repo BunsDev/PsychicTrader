@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Display</title>
+    <style>
+        .image-container {
+            border: 1px solid #ddd;
+            margin: 20px;
+            padding: 20px;
+            display: inline-block;
+        }
+
+        .color-palette {
+            width: 50px;
+            height: 50px;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .caption {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    {% for image_detail in images %}
+    <div class="image-container">
+        <img src="{{ image_detail['url'] }}" alt="Image">
+        <div>
+            {% for color, _ in image_detail['color_palette'] %}
+            <div class="color-palette" style="background-color: rgb{{ color }}"></div>
+            {% endfor %}
+        </div>
+        <div class="caption">
+            {% for caption in image_detail['captions'] %}
+            <p>{{ caption }}</p>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+
+</body>
+
+</html>

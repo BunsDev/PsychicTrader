@@ -1,0 +1,123 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container main-content">
+    <h2>Results</h2>
+    <div class="img-container">
+        <img src="{{ results.image_url }}" alt="Crypto Image" class="result-img">
+    </div>
+
+    <audio id="alertSound" loop>
+        <source src="{{ url_for('static', filename='alert.mp3') }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+
+
+    <div class="btn-container">
+        <!-- Stop Sound Button -->
+        <button id="stopSound" onclick="document.getElementById('alertSound').pause();">Stop Sound</button>
+
+        <form action="/start-session" method="post">
+            <button type="submit" class="btn">Start New Session</button>
+        </form>
+        <form action="{{ url_for('index') }}" method="get">
+            <button type="submit" class="btn btn-secondary">Go Back Home</button>
+        </form>
+
+    </div>
+
+    <div class="modal-container">
+        <button id="showDevStats" class="btn btn-info">Dev Stats</button>
+        <button id="showMatches" class="btn btn-success">Show Matches</button>
+
+        <!-- Modal for displaying Dev Stats -->
+        <div id="devStatsModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <pre id="devStatsContent"></pre>
+            </div>
+        </div>
+
+        <!-- Modal for displaying Matches -->
+        <div id="matchesModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Top Performing Crypto</h3>
+                <p>{{ results.top_crypto }} (Growth: {{ results.top_growth }})</p>
+                <h3>Matched Crypto</h3>
+                <p>{{ results.matched_crypto }} (Growth: {{ results.matched_crypto_growth }})</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modals
+        var devStatsModal = document.getElementById("devStatsModal");
+        var matchesModal = document.getElementById("matchesModal");
+
+        // Get the buttons that open the modals
+        var devStatsBtn = document.getElementById("showDevStats");
+        var matchesBtn = document.getElementById("showMatches");
+
+        // Get the <span> elements that close the modals
+        var spans = document.getElementsByClassName("close");
+
+        // Function to disable scroll on the body
+        function disableScroll() {
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to enable scroll on the body
+        function enableScroll() {
+            document.body.style.overflow = '';
+        }
+
+        // When the user clicks the button, open the modal for Dev Stats
+        devStatsBtn.onclick = function () {
+            var data = {{ results | tojson | safe
+        }};
+        document.getElementById("devStatsContent").textContent = JSON.stringify(data, null, 4);
+        devStatsModal.style.display = "block";
+        disableScroll();
+            }
+
+        // When the user clicks the button, open the modal for Matches
+        matchesBtn.onclick = function () {
+            matchesModal.style.display = "block";
+            disableScroll();
+        }
+
+        // When the user clicks on <span> (x), close the modals
+        for (let i = 0; i < spans.length; i++) {
+            spans[i].onclick = function () {
+                devStatsModal.style.display = "none";
+                matchesModal.style.display = "none";
+                enableScroll();
+            }
+        }
+
+        // When the user clicks anywhere outside of the modals, close them
+        window.onclick = function (event) {
+            if (event.target == devStatsModal) {
+                devStatsModal.style.display = "none";
+                enableScroll();
+            } else if (event.target == matchesModal) {
+                matchesModal.style.display = "none";
+                enableScroll();
+            }
+        }
+        //play the sound when the page loads and stop it when the button is clicked:
+        document.addEventListener('DOMContentLoaded', function () {
+            var audio = document.getElementById("alertSound");
+            audio.play();
+
+            document.getElementById("stopSound").addEventListener("click", function () {
+                audio.pause();
+                audio.currentTime = 0;
+            });
+        });
+
+    </script>
+</div>
+{% endblock %}

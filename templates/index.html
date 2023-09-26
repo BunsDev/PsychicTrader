@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARV Trading</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        // Play sound when the page is loaded
+        window.onload = function () {
+            document.getElementById("alertSound").play();
+        }
+    </script>
+</head>
+
+<body>
+
+
+    <nav class="nav">
+        <div class="nav-logo">ARV Trading</div>
+        <ul class="nav-links">
+            <li><a href="/start-session">Start Session</a></li>
+            <li><a href="/show-results">View History</a></li>
+            <li><a href="/feedback">Feedback</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero-section">
+        <h1>Welcome to ARV Trading</h1>
+        <p>Your cutting-edge crypto trading platform based on associative remote viewing techniques.</p>
+        <a href="/start-session" class="btn btn-primary">Start Trading Session</a>
+    </header>
+
+    <footer class="footer">
+        <p>&copy; 2023 ARV Trading. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

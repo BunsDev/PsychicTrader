@@ -1,0 +1,5 @@
+pycocotools    
+flask
+opencv-python
+g4f
+scikit-image

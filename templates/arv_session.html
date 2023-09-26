@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container main">
+    <h2>ARV Session</h2>
+    <p>{{ instructions }}</p>
+    <form action="/arv-session" method="post">
+        <div class="form-group">
+            <textarea name="arv_input" rows="10" class="form-control"
+                placeholder="Enter your insights here..."></textarea>
+        </div>
+        <button type="submit" class="btn">Submit Insights</button>
+    </form>
+</div>
+{% endblock %}

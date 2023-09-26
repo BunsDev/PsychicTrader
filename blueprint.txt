@@ -1,0 +1,71 @@
+PROGRAM ARV_CryptoPredictor:
+
+1. System Overview:
+   The ARV_CryptoPredictor is designed to correlate images with potential future cryptocurrency performance. Using Remote Viewing (RV) sessions, users describe images they "see," which the program then matches with existing images associated with specific cryptocurrencies. The system then executes trades based on these predictions and provides feedback to the user after the trading period.
+
+2. Libraries and Frameworks:
+   - Flask for the backend web application.
+   - React for the frontend UI.
+   - Sklearn for clustering (dominant color extraction).
+   - PIL for image processing.
+   - Other typical Python libraries like JSON and Numpy.
+
+3. Modules:
+
+   a) COCO Dataset Handling Module (CocoHandler):
+      - Interfaces with the COCO Captions dataset.
+      - Provides functionalities to get random images and associated captions.
+      - Ensures selected images are diverse based on dominant color and captions.
+
+   b) Crypto Data Handling Module (CryptoHandler):
+      - Interfaces with the freqtrade system.
+      - Retrieves OCHLV data for cryptos.
+      - Contains placeholder functions for buy/sell orders.
+
+   c) Remote Viewing Session Module (RVSession):
+      - Manages the RV session.
+      - Records user inputs and matches them to COCO images.
+      - Executes trades based on predictions.
+
+   d) Web Interface (Flask App):
+      - Flask-based backend serving a React frontend.
+      - Contains routes for starting sessions, submitting sessions, and showing results.
+
+   e) Data Storage and Analysis (DataHandler):
+      - Stores session data, including crypto returns, user predictions, and associated images.
+      - Provides statistical analysis on stored data.
+
+   f) Image Diversity Algorithm (DiversityHandler):
+      - Ensures selected images are diverse.
+      - Uses dominant color extraction and ChatGPT-like functions to check diversity.
+
+   g) Feedback Loop:
+      - Displays the image of the top-performing crypto after the trading period.
+
+4. Main Functionalities:
+
+   a) Starting an RV Session:
+      - User initiates via the web UI.
+      - Random images associated with cryptos are displayed.
+      - User records their RV session output.
+      - The system matches the user's description with COCO images.
+      - A trade is executed based on the prediction.
+
+   b) Image Matching:
+      - For every crypto, an image is selected from the COCO dataset.
+      - When a user describes what they "saw" in their RV session, the system uses a ChatGPT-like function to compare the description to image captions.
+      - The crypto associated with the highest-matching image is chosen for trading.
+
+   c) Trading:
+      - If the predicted crypto is expected to be the top performer, a buy/long position is placed.
+      - Otherwise, sell/short positions are placed on other cryptos.
+
+   d) Feedback Mechanism:
+      - After the trade period, the actual top-performing crypto's associated image is displayed to the user for a set duration.
+
+5. Error Handling:
+   Basic try-catch mechanisms are implemented throughout the software to handle common exceptions and provide meaningful error messages.
+
+6. System Execution:
+   The main execution loop prompts the user to start an RV session, then undergoes the steps of image assignment, RV session recording, image matching, trading, and feedback provision. The loop continues until the user decides to exit.
+

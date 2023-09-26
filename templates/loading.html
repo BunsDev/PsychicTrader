@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container main">
+    <h2>Loading...</h2>
+    <p id="loadingMessage">{{ message }}</p>
+    <p>Time remaining: <span id="timeRemaining">{{ time_remaining }}</span> seconds</p>
+
+    <script>
+        // Extract the initial time remaining from the page
+        let timeRemaining = parseInt(document.getElementById("timeRemaining").textContent, 10);
+
+        // Function to update the time on the page
+        function updateTime() {
+            if (timeRemaining > 0) {
+                timeRemaining--;
+                document.getElementById("timeRemaining").textContent = timeRemaining;
+            } else {
+                // Optionally, redirect to another page when the time reaches 0
+                window.location.href = "/show-results";
+            }
+        }
+
+        // Call the updateTime function every second
+        setInterval(updateTime, 1000);
+    </script>
+</div>
+{% endblock %}
